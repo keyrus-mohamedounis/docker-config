@@ -1,0 +1,85 @@
+echo -e "\n Starting docker installation in 2 seconds ... \n "
+
+sleep 2
+
+echo -e "\n removing old packages \n "
+
+
+
+sleep 1
+
+yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+
+echo -e " \n check .. ! \n "
+
+
+
+echo -e "\n setting up yum \n "
+sleep 1 
+yum install -y yum-utils
+echo -e " \n check .. ! \n "
+
+
+echo -e "\n downloading docker-ce repo \n"
+sleep 1 
+yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+echo -e " \n check .. ! \n "
+
+
+echo -e " \n enabling docker-ce-nightly \n " 
+sleep 1 
+yum-config-manager --enable docker-ce-nightly
+
+echo -e " \n check .. ! \n "
+
+
+
+echo -e " \n enabling docker-ce-test \n "
+sleep 1 
+yum-config-manager --enable docker-ce-test 
+
+echo -e " \n check .. ! \n "
+
+
+
+echo -e " \n installing docker  \n "
+sleep 1 
+yum install -y --allowerasing  docker-ce docker-ce-cli containerd.io
+
+echo -e " \n check .. ! \n "
+
+
+
+
+echo -e " \n Starting docker  \n "
+sleep 1
+systemctl start docker
+
+echo -e " \n check .. ! \n "
+
+
+
+echo -e " \n checking installation  \n "
+sleep 1
+docker run hello-world
+
+echo -e " \n check .. ! \n "
+
+
+
+echo -e " \n enabling the use of docker without sudo for the user --> "obf"  \n "
+sleep 1
+sudo usermod -aG docker obf
+echo -e " \n check .. ! \n "
+
+
